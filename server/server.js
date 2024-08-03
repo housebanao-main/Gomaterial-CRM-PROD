@@ -18,7 +18,7 @@ app.use(express.json());
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5000',
-  'http://ec2-16-171-2-222.eu-north-1.compute.amazonaws.com'
+  'http://ec2-51-20-10-92.eu-north-1.compute.amazonaws.com/'
 ];
 
 const corsOptions = {
