@@ -16,9 +16,10 @@ connectDB();
 app.use(express.json());
 
 const allowedOrigins = [
+  'http://localhost:3002',
   'http://localhost:3000',
   'http://localhost:5000',
-  'https://ec2-13-60-96-103.eu-north-1.compute.amazonaws.com/'
+  'http://ec2-51-20-5-77.eu-north-1.compute.amazonaws.com'
 ];
 
 const corsOptions = {
@@ -29,7 +30,7 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Add PATCH here
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
 
@@ -43,20 +44,20 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/api/boq', require('./routes/boqRoutes'));
-app.use('/api/users', require('./routes/userRoutes')); // Ensure this line exists
-app.use('/api/leads', require('./routes/leadRoutes')); // Include the lead routes
+app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/leads', require('./routes/leadRoutes'));
 app.use('/api/customers', require('./routes/customerRoutes'));
 app.use('/api/partners', require('./routes/partnerRoutes'));
 app.use('/api/admins', require('./routes/adminRoutes'));
 app.use('/api/transports', require('./routes/transportRoutes'));
-app.use(require('./routes/userAuth')); // Add this line to include the user authentication route
+app.use(require('./routes/userAuth'));
 
 // Serve static files from the React app in the client/build directory
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
 // The "catchall" handler: for any request that doesn't match one above, send back React's index.html file.
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
 });
 
 app.listen(PORT, '0.0.0.0', () => {
